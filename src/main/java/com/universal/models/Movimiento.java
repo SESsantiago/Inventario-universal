@@ -15,7 +15,8 @@ public class Movimiento extends EntidadBase {
     private BigDecimal cantidad;
     private String nota;
 
-    public Movimiento() { super();}
+    public Movimiento() {
+        super();}
 
     public Movimiento(int productoId, TipoMovimiento tipo, BigDecimal cantidad, String nota) {
         super();

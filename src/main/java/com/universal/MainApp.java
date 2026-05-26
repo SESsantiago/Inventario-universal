@@ -37,24 +37,5 @@ public class MainApp {
 
         System.out.println("✓ Servidor corriendo en http://localhost:4567");
         System.out.println("  Prueba: http://localhost:4567/api/productos/usuario/1");
-
-        // Simula una salida de 2 kg de Café Molido (producto_id = 1)
-        MovimientoDAOImpl movDAO = new MovimientoDAOImpl();
-
-        Movimiento salida = new Movimiento(
-                1,                              // producto_id = Café Molido
-                Movimiento.TipoMovimiento.SALIDA,
-                new BigDecimal("12"),           // sale suficiente para bajar el mínimo
-                "Prueba de transacción"
-        );
-
-        boolean ok = movDAO.registrar(salida);
-        System.out.println("Movimiento registrado: " + ok);
-
-// Verifica que el stock cambió
-        ProductoDAOImpl prodDAO = new ProductoDAOImpl();
-        Producto cafe = prodDAO.obtenerPorId(1);
-        System.out.println("Stock Café Molido ahora: " + cafe.getStockActual());
-        System.out.println("¿Bajo mínimo? " + cafe.estaBajoMinimo());
     }
 }

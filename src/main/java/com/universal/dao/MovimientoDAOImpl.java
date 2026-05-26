@@ -13,6 +13,33 @@ public class MovimientoDAOImpl {
 
     public boolean registrar(Movimiento movimiento){
 
+        if (movimiento.getTipo() == TipoMovimiento.SALIDA) {
+            String sqlVerifica =
+                    "SELECT stock_actual FROM Productos" +
+                            "WHERE id = ? AND activo = 1";
+            try {
+                Connection conVerifica = ConexionDB.obtenerConexion();
+                PreparedStatement psVerifica = conVerifica.prepareStatement(sqlVerifica);
+                        psVerifica.setInt(1, movimiento.getProductoId());
+                        ResultSet rsVerifica = psVerifica.executeQuery();
+
+                        if (rsVerifica.next()) {
+                            BigDecimal stockDisponible = rsVerifica.getBigDecimal("stock_actual");
+                            if (movimiento.getCantidad().compareTo(stockDisponible) > 0) {
+                                System.err.println("Stock insuficiente. Disponible: "
+                                        + stockDisponible);
+                                return false;
+                            }
+                        } else {
+                                System.err.println("Producto no encontrado o inactivo.");
+                                return false;
+                        }
+            } catch (SQLException e) {
+                            System.err.println("Error al verificar stock: " + e.getMessage());
+                            return false;
+            }
+        }
+
         Connection con = null;
 
         try {
