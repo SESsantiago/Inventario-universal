@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 
 public class Movimiento extends EntidadBase {
 
+    // Enum: define los únicos valores válidos para tipo
+    // Es como el CHECK constraint de SQL, pero en Java
     public enum TipoMovimiento {
         ENTRADA, SALIDA
     }
